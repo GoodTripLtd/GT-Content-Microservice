@@ -3,13 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Microservice.API", "Content.Microservice.API\Content.Microservice.API.csproj", "{A8248933-1213-43BF-AEFE-BA74DEEE5CEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Microservice.API", "Content.Microservice.API\Content.Microservice.API.csproj", "{A8248933-1213-43BF-AEFE-BA74DEEE5CEF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A193FBFA-B40E-49D5-AF63-461C6E8996A5} = {A193FBFA-B40E-49D5-AF63-461C6E8996A5}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Microservice.Infrastructure", "Content.Microservice.Infrastructure\Content.Microservice.Infrastructure.csproj", "{A193FBFA-B40E-49D5-AF63-461C6E8996A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Microservice.Infrastructure", "Content.Microservice.Infrastructure\Content.Microservice.Infrastructure.csproj", "{A193FBFA-B40E-49D5-AF63-461C6E8996A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Microservice.AppCore", "Content.Microservice.AppCore\Content.Microservice.AppCore.csproj", "{6C77B1C9-366F-4C30-9064-7574939B32AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Microservice.AppCore", "Content.Microservice.AppCore\Content.Microservice.AppCore.csproj", "{6C77B1C9-366F-4C30-9064-7574939B32AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Microservice.Domain", "Content.Microservice.Domain\Content.Microservice.Domain.csproj", "{8D461D3F-8266-40FA-86FF-F34F49AAF2A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Microservice.Domain", "Content.Microservice.Domain\Content.Microservice.Domain.csproj", "{8D461D3F-8266-40FA-86FF-F34F49AAF2A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
