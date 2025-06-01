@@ -1,11 +1,18 @@
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.Runtime;
+using Amazon.SQS;
 using Content.Microservice.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var awsOptions = new AWSOptions
+{
+    Credentials = new BasicAWSCredentials(builder.Configuration["AWS:AccessKey"], builder.Configuration["AWS:SecretKey"])
+};
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -58,6 +65,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddAWSService<AmazonSQSClient>();
 
 var app = builder.Build();
 

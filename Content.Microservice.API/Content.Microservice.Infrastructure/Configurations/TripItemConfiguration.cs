@@ -11,7 +11,7 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class TripItemConfiguration : BaseEntityConfiguration<TripItem>
     {        
-        public override void ConfigureOtherProperties(EntityTypeBuilder<TripItem> builder)
+        public override void Configure(EntityTypeBuilder<TripItem> builder)
         {
             base.Configure(builder);
 

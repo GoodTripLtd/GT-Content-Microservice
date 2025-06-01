@@ -11,7 +11,7 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class PhotoConfiguration : BaseEntityConfiguration<Photo>
     {
-        public override void ConfigureOtherProperties(EntityTypeBuilder<Photo> builder)
+        public override void Configure(EntityTypeBuilder<Photo> builder)
         {
             base.Configure(builder);
 

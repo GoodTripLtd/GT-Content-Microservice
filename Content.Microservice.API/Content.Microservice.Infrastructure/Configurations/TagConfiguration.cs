@@ -10,7 +10,7 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class TagConfiguration : BaseEntityConfiguration<Tag>
     {
-        public override void ConfigureOtherProperties(EntityTypeBuilder<Tag> builder)
+        public override void Configure(EntityTypeBuilder<Tag> builder)
         {
             base.Configure(builder);
 

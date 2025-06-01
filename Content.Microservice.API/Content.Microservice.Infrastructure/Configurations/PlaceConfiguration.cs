@@ -11,7 +11,7 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class PlaceConfiguration : BaseEntityConfiguration<Place>
     {
-        public override void ConfigureOtherProperties(EntityTypeBuilder<Place> builder)
+        public override void Configure(EntityTypeBuilder<Place> builder)
         {
             base.Configure(builder);
 

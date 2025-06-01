@@ -11,7 +11,7 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class PlaceTagConfiguration : BaseEntityConfiguration<PlaceTag>
     {
-        public override void ConfigureOtherProperties(EntityTypeBuilder<PlaceTag> builder)
+        public override void Configure(EntityTypeBuilder<PlaceTag> builder)
         {
             base.Configure(builder);
 

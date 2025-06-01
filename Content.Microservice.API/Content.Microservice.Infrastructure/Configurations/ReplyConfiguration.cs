@@ -11,7 +11,7 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class ReplyConfiguration : BaseEntityConfiguration<Reply>
     {
-        public override void ConfigureOtherProperties(EntityTypeBuilder<Reply> builder)
+        public override void Configure(EntityTypeBuilder<Reply> builder)
         {
             base.Configure(builder);
 
@@ -27,21 +27,25 @@ namespace Content.Microservice.Infrastructure.Configurations
 
             builder.Property(rp => rp.ModifiedAt);
 
-            // 3. Відношення Reply → Review (1:N) через ReviewId
-            // Якщо ReviewId != null, то ця Reply належить до Review
+            builder
+                .HasOne(rp => rp.User)
+                .WithMany(u => u.Replies)
+                .HasForeignKey(rp => rp.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Reply → Review (N:1), без каскаду
             builder
                 .HasOne(rp => rp.Review)
-                .WithMany(r => r.Replies)   // вказуємо, що Review.Replies – колекція всіх Reply
+                .WithMany(r => r.Replies)
                 .HasForeignKey(rp => rp.ReviewId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // 4. Самозв’язок Reply → ChildReplies (1:N) через ParentReplyId
-            // Якщо ParentReplyId != null, то ця Reply — дочірня для іншої Reply
+            // Reply → ParentReply (N:1), без каскаду
             builder
                 .HasOne(rp => rp.ParentReply)
                 .WithMany(rp => rp.ChildReplies)
                 .HasForeignKey(rp => rp.ParentReplyId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // 5. Відношення Reply → Photo (1:N) через ReplyId
             // Якщо у вас є колекція Photos у Reply, то треба прописати:

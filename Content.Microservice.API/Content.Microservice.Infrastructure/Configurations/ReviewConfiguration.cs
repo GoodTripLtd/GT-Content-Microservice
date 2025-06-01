@@ -11,7 +11,7 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class ReviewConfiguration : BaseEntityConfiguration<Review>
     {
-        public override void ConfigureOtherProperties(EntityTypeBuilder<Review> builder)
+        public override void Configure(EntityTypeBuilder<Review> builder)
         {
             base.Configure(builder);
 
@@ -25,12 +25,6 @@ namespace Content.Microservice.Infrastructure.Configurations
                    .IsRequired();
             builder.Property(r => r.PhotoUrl)
                    .HasMaxLength(500);
-            
-            builder
-                .HasMany(r => r.Replies)
-                .WithOne(rp => rp.Review)
-                .HasForeignKey(rp => rp.ReviewId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasMany(r => r.Photos)
@@ -39,16 +33,24 @@ namespace Content.Microservice.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder
-                .HasMany(r => r.Votes)
-                .WithOne(v => v.Review)
-                .HasForeignKey(v => v.ReviewId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
                 .HasOne(r => r.User)
                 .WithMany(u => u.Reviews)
                 .HasForeignKey(r => r.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Review → Reply (1:N), без каскаду
+            builder
+                .HasMany(r => r.Replies)
+                .WithOne(rp => rp.Review)
+                .HasForeignKey(rp => rp.ReviewId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Review → Vote (1:N), без каскаду
+            builder
+                .HasMany(r => r.Votes)
+                .WithOne(v => v.Review)
+                .HasForeignKey(v => v.ReviewId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasIndex(r => r.PlaceId);
             builder.HasIndex(r => r.UserId);

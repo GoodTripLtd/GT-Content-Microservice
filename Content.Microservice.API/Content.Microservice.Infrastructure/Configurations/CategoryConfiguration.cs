@@ -10,7 +10,7 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class CategoryConfiguration : BaseEntityConfiguration<Category>
     {
-        public override void ConfigureOtherProperties(EntityTypeBuilder<Category> builder)
+        public override void Configure(EntityTypeBuilder<Category> builder)
         {
             base.Configure(builder);
 

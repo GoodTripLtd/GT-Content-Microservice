@@ -11,13 +11,12 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal abstract class BaseEntityConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseEntity
     {
-        public void Configure(EntityTypeBuilder<T> builder)
+        public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).IsRequired();
             builder.Property(e => e.CreatedAt).IsRequired();
             builder.Property(e => e.ModifiedAt);
         }
-        public abstract void ConfigureOtherProperties(EntityTypeBuilder<T> builder);
     }
 }

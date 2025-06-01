@@ -9,7 +9,8 @@ namespace Content.Microservice.Domain.Entities
     public class Vote: BaseEntity
     {
         public Guid ReviewId { get; set; }
-        public Review Review { get; set; }
+        public Review? Review { get; set; } = null!;
+        public Guid UserId { get; set; }
         public bool Value { get; set; }
         public DateTime VotedAt { get; set; }
     }

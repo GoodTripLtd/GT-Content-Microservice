@@ -11,36 +11,36 @@ namespace Content.Microservice.Infrastructure.Configurations
 {
     internal class UserSummaryConfiguration : BaseEntityConfiguration<UserSummary>
     {
-        public override void ConfigureOtherProperties(EntityTypeBuilder<UserSummary> builder)
+        public override void Configure(EntityTypeBuilder<UserSummary> builder)
         {
             base.Configure(builder);
 
             // Властивості
-            builder.Property(us => us.UserName)
+            builder.Property(u => u.UserName)
                    .IsRequired()
                    .HasMaxLength(50);
+            builder.HasIndex(u => u.UserName).IsUnique();
 
-            // Унікальний індекс на UserName
-            builder.HasIndex(us => us.UserName).IsUnique();
-
-            // Зв'язки “один UserSummary → багато Replies/Votes/TripPlans/Reviews”
+            // UserSummary → Review (1:N), без каскаду
             builder
-                .HasMany(us => us.Replies)
-                .WithOne(rp => rp.User)
-                .HasForeignKey(rp => rp.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(us => us.TripPlans)
-                .WithOne(tp => tp.User)
-                .HasForeignKey(tp => tp.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder
-                .HasMany(us => us.Reviews)
+                .HasMany(u => u.Reviews)
                 .WithOne(r => r.User)
                 .HasForeignKey(r => r.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // UserSummary → Reply (1:N), без каскаду
+            builder
+                .HasMany(u => u.Replies)
+                .WithOne(rp => rp.User)
+                .HasForeignKey(rp => rp.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // UserSummary → TripPlan (1:N), без каскаду
+            builder
+                .HasMany(u => u.TripPlans)
+                .WithOne(tp => tp.User)
+                .HasForeignKey(tp => tp.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

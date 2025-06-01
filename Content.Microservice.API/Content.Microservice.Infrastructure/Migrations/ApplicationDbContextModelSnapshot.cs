@@ -36,9 +36,13 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Categories");
                 });
@@ -57,7 +61,8 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<Guid?>("ReplyId")
                         .HasColumnType("uniqueidentifier");
@@ -71,7 +76,10 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.HasIndex("ReviewId");
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", t =>
+                        {
+                            t.HasCheckConstraint("CK_Photos_OneFk", "                     (ReviewId IS NOT NULL AND ReplyId IS NULL)                     OR (ReviewId IS NULL AND ReplyId IS NOT NULL)");
+                        });
                 });
 
             modelBuilder.Entity("Content.Microservice.Domain.Entities.Place", b =>
@@ -88,27 +96,37 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<decimal>("Latitude")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9,6)");
 
                     b.Property<decimal>("Longitude")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9,6)");
 
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<double>("Rating")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValue(0.0);
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("Name");
+
+                    b.HasIndex("Rating");
+
+                    b.HasIndex("Latitude", "Longitude");
 
                     b.ToTable("Places");
                 });
@@ -137,6 +155,9 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.HasIndex("TagId");
 
+                    b.HasIndex("PlaceId", "TagId")
+                        .IsUnique();
+
                     b.ToTable("PlaceTags");
                 });
 
@@ -148,7 +169,8 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -173,7 +195,10 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Replies");
+                    b.ToTable("Replies", t =>
+                        {
+                            t.HasCheckConstraint("CK_Replies_OneFk", "                     (ReviewId IS NOT NULL AND ParentReplyId IS NULL)                     OR (ReviewId IS NULL AND ParentReplyId IS NOT NULL)                 ");
+                        });
                 });
 
             modelBuilder.Entity("Content.Microservice.Domain.Entities.Review", b =>
@@ -193,7 +218,8 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("PhotoUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<Guid>("PlaceId")
                         .HasColumnType("uniqueidentifier");
@@ -224,9 +250,13 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Tags");
                 });
@@ -248,7 +278,8 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("Notes")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<Guid>("PlaceId")
                         .HasColumnType("uniqueidentifier");
@@ -257,6 +288,8 @@ namespace Content.Microservice.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DisplayOrder");
 
                     b.HasIndex("PlaceId");
 
@@ -276,7 +309,8 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -292,12 +326,17 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EndDate");
+
+                    b.HasIndex("StartDate");
 
                     b.HasIndex("UserId");
 
@@ -318,9 +357,13 @@ namespace Content.Microservice.Infrastructure.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
 
                     b.ToTable("UserSummaries");
                 });
@@ -340,6 +383,9 @@ namespace Content.Microservice.Infrastructure.Migrations
                     b.Property<Guid>("ReviewId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("Value")
                         .HasColumnType("bit");
 
@@ -357,11 +403,13 @@ namespace Content.Microservice.Infrastructure.Migrations
                 {
                     b.HasOne("Content.Microservice.Domain.Entities.Reply", "Reply")
                         .WithMany("Photos")
-                        .HasForeignKey("ReplyId");
+                        .HasForeignKey("ReplyId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Content.Microservice.Domain.Entities.Review", "Review")
                         .WithMany("Photos")
-                        .HasForeignKey("ReviewId");
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Reply");
 
@@ -402,16 +450,18 @@ namespace Content.Microservice.Infrastructure.Migrations
                 {
                     b.HasOne("Content.Microservice.Domain.Entities.Reply", "ParentReply")
                         .WithMany("ChildReplies")
-                        .HasForeignKey("ParentReplyId");
+                        .HasForeignKey("ParentReplyId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Content.Microservice.Domain.Entities.Review", "Review")
                         .WithMany("Replies")
-                        .HasForeignKey("ReviewId");
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Content.Microservice.Domain.Entities.UserSummary", "User")
                         .WithMany("Replies")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ParentReply");
@@ -432,7 +482,7 @@ namespace Content.Microservice.Infrastructure.Migrations
                     b.HasOne("Content.Microservice.Domain.Entities.UserSummary", "User")
                         .WithMany("Reviews")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Place");
@@ -445,7 +495,7 @@ namespace Content.Microservice.Infrastructure.Migrations
                     b.HasOne("Content.Microservice.Domain.Entities.Place", "Place")
                         .WithMany()
                         .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Content.Microservice.Domain.Entities.TripPlan", "TripPlan")
@@ -464,7 +514,7 @@ namespace Content.Microservice.Infrastructure.Migrations
                     b.HasOne("Content.Microservice.Domain.Entities.UserSummary", "User")
                         .WithMany("TripPlans")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -475,7 +525,7 @@ namespace Content.Microservice.Infrastructure.Migrations
                     b.HasOne("Content.Microservice.Domain.Entities.Review", "Review")
                         .WithMany("Votes")
                         .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Review");
