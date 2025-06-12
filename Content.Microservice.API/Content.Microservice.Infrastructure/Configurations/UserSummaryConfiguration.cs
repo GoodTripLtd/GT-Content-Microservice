@@ -34,13 +34,6 @@ namespace Content.Microservice.Infrastructure.Configurations
                 .WithOne(rp => rp.User)
                 .HasForeignKey(rp => rp.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            // UserSummary → TripPlan (1:N), без каскаду
-            builder
-                .HasMany(u => u.TripPlans)
-                .WithOne(tp => tp.User)
-                .HasForeignKey(tp => tp.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

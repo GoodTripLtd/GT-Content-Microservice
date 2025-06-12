@@ -14,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Microservice.AppCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Microservice.Domain", "Content.Microservice.Domain\Content.Microservice.Domain.csproj", "{8D461D3F-8266-40FA-86FF-F34F49AAF2A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Content.Microservice.Common", "Content.Microservice.Common\Content.Microservice.Common.csproj", "{37044168-F0DF-4E88-8717-63961179BDE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Content.Microservice.Common", "Content.Microservice.Common\Content.Microservice.Common.csproj", "{37044168-F0DF-4E88-8717-63961179BDE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Content.Microservice.Domain.Entities
 {
-    public class TripItem: BaseEntity
+    public class PlaceCategory : BaseEntity
     {
-        public Guid TripPlanId { get; set; }
-        public TripPlan TripPlan { get; set; }
         public Guid PlaceId { get; set; }
+        public Guid CategoryId { get; set; }
         public Place Place { get; set; }
-        public string Notes { get; set; }
-        public int DisplayOrder { get; set; }
+        public Category Category { get; set; }
     }
 }

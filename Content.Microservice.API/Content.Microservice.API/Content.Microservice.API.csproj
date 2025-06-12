@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.1" />
+    <PackageReference Include="AWSSDK.SQS" Version="4.0.0.4" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
@@ -27,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Content.Microservice.AppCore\Content.Microservice.AppCore.csproj" />
     <ProjectReference Include="..\Content.Microservice.Infrastructure\Content.Microservice.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -17,28 +17,24 @@ namespace Content.Microservice.Infrastructure.Configurations
 
             builder.HasKey(p => p.Id);
 
-            // Властивості
             builder.Property(p => p.PhotoUrl)
                 .IsRequired()
-                .HasMaxLength(1000); // довжину URL можна підправити
+                .HasMaxLength(1000);
 
             builder.Property(p => p.ModifiedAt);
 
-            // --- Відношення Photo → Review (1:N) через ReviewId ---
             builder
                 .HasOne(p => p.Review)
                 .WithMany(r => r.Photos)
                 .HasForeignKey(p => p.ReviewId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // --- Відношення Photo → Reply (1:N) через ReplyId ---
             builder
                 .HasOne(p => p.Reply)
                 .WithMany(rp => rp.Photos)
                 .HasForeignKey(p => p.ReplyId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // --- CHECK-CONSTRAINT: лише одне з ReviewId або ReplyId може бути НЕ NULL ---
             builder.ToTable(t=>t.HasCheckConstraint(
                 name: "CK_Photos_OneFk",
                 sql: @"
@@ -46,7 +42,6 @@ namespace Content.Microservice.Infrastructure.Configurations
                     OR (ReviewId IS NULL AND ReplyId IS NOT NULL)"
                     .Replace(Environment.NewLine, " ")));
 
-            // Індекси для швидкого пошуку
             builder.HasIndex(p => p.ReviewId);
             builder.HasIndex(p => p.ReplyId);
         }

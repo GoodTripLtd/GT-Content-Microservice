@@ -11,7 +11,6 @@ namespace Content.Microservice.Domain.Entities
         public string UserName { get; set; }
 
         public ICollection<Reply> Replies { get; set; } = new List<Reply>();
-        public ICollection<TripPlan> TripPlans { get; set; } = new List<TripPlan>();
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

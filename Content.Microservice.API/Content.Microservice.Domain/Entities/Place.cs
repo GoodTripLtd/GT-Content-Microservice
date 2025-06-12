@@ -13,7 +13,14 @@ namespace Content.Microservice.Domain.Entities
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public double Rating { get; set; }
+        public double Lat { get; set; }
+        public double Lng { get; set; }
+        public string Vicinity { get; set; } = null!;
+        public string GooglePlaceId { get; set; } = null!;
+        public string Types { get; set; } = null!;
+        public string Tags { get; set; } = null!;
+        public int UserRatingsTotal { get; set; }
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; }
+        public List<PlaceCategory> Categories { get; set; }
     }
 }

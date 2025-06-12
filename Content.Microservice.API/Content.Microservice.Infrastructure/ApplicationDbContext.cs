@@ -18,9 +18,6 @@ namespace Content.Microservice.Infrastructure
         public DbSet<Reply> Replies { get; set; }
         public DbSet<Photo> Photos { get; set; }
 
-        public DbSet<TripItem> TripItems { get; set; }
-        public DbSet<TripPlan> TripPlans { get; set; }
-
         public DbSet<UserSummary> UserSummaries { get; set; }
         public DbSet<Vote> Votes { get; set; }
 

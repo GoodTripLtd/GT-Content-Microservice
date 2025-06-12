@@ -20,9 +20,11 @@ namespace Content.Microservice.Infrastructure.Repositories
                                  .ToListAsync();
         }
 
-        public async Task<IEnumerable<Place>> GetByLocationAsync(decimal latitude, decimal longitude, double radiusKm)
+        public async Task<IEnumerable<Place>> GetByLocationAsync(
+            decimal latitude,
+            decimal longitude,
+            double radiusKm)
         {
-            // Приблизна фільтрація за радіусом: 1 градус ≈ 111 км
             var delta = (decimal)(radiusKm / 111.0);
             var minLat = latitude - delta;
             var maxLat = latitude + delta;

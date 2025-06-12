@@ -13,11 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Content.Microservice.Common\Content.Microservice.Common.csproj" />
     <ProjectReference Include="..\Content.Microservice.Domain\Content.Microservice.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
